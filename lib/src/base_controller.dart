@@ -30,14 +30,14 @@ abstract base class BaseController<T extends BaseState> with ChangeNotifier {
 
   @protected
   void onError(Object error, [StackTrace? stackTrace]) {
-    setState(
-      BaseState.failed(
-            message: 'Error occured',
-            error: error,
-            stackTrace: stackTrace,
-          )
-          as T,
-    );
+    // setState(
+    //   BaseState.failed(
+    //         message: 'Error occured',
+    //         error: error,
+    //         stackTrace: stackTrace,
+    //       )
+    //       as T,
+    // );
   }
 
   @protected

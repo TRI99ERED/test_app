@@ -386,7 +386,14 @@ final class CalculatorController extends BaseController<CalculatorState> {
       await serialExecutor.synchronized(() async {
         try {
           if (state.result == '0') {
-            throw DivisionByZeroException();
+            setState(
+              CalculatorState.failed(
+                memory: state.memory,
+                result: 'Can\'t divide by zero',
+                message: 'Reciprocal error: division by zero',
+                isReadOnly: true,
+              ),
+            );
           } else {
             setState(
               state.copyWith(
@@ -451,7 +458,14 @@ final class CalculatorController extends BaseController<CalculatorState> {
   Future<void> sqrt() async => await serialExecutor.synchronized(() async {
     try {
       if (state.result.startsWith('-')) {
-        throw SqrtNegativeNumberException();
+        setState(
+          CalculatorState.failed(
+            memory: state.memory,
+            result: 'Can\'t sqrt negative number',
+            isReadOnly: true,
+            message: 'Square root error',
+          ),
+        );
       } else {
         setState(
           state.copyWith(
@@ -704,8 +718,7 @@ final class CalculatorController extends BaseController<CalculatorState> {
             '+' => (a + b).toString(),
             '−' => (a - b).toString(),
             '×' => (a * b).toString(),
-            '÷' =>
-              b == 0 ? throw DivisionByZeroException() : (a / b).toString(),
+            '÷' => b == 0 ? 'Can\'t divide by zero' : (a / b).toString(),
             _ => state.result,
           },
           memory: (b >= 0) ? '${state.memory}$b=' : '${state.memory}($b)=',
