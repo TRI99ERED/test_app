@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:test_app/src/controller_observer.dart';
 import 'package:test_app/src/serial_executor.dart';
 
 part 'base_state.dart';
@@ -12,7 +13,9 @@ abstract base class BaseController<T extends BaseState> with ChangeNotifier {
   final String name;
   T _state;
 
-  BaseController({required this.name, required T state}) : _state = state;
+  BaseController({required this.name, required T state}) : _state = state {
+    ControllerObserver.instance.onCreate(this, state);
+  }
 
   T get state => _state;
   Stream<T> get stateStream => _stateController.stream;
@@ -25,19 +28,18 @@ abstract base class BaseController<T extends BaseState> with ChangeNotifier {
     final previousState = _state;
     _state = newState;
     _stateController.add(newState);
+
+    ControllerObserver.instance.onStateChange(this, previousState, newState);
     notifyListeners();
   }
 
   @protected
   void onError(Object error, [StackTrace? stackTrace]) {
-    // setState(
-    //   BaseState.failed(
-    //         message: 'Error occured',
-    //         error: error,
-    //         stackTrace: stackTrace,
-    //       )
-    //       as T,
-    // );
+    ControllerObserver.instance.onError(
+      this,
+      error,
+      stackTrace ?? StackTrace.current,
+    );
   }
 
   @protected
@@ -60,6 +62,7 @@ abstract base class BaseController<T extends BaseState> with ChangeNotifier {
   @override
   void dispose() {
     _stateController.close();
+    ControllerObserver.instance.onDispose(this);
     super.dispose();
   }
 }

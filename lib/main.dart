@@ -1,10 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:test_app/src/calculator.dart';
 import 'package:test_app/src/calculator_controller.dart';
 import 'package:test_app/src/calculator_scope.dart';
 
 void main() {
-  runApp(const App());
+  runZonedGuarded(
+    () {
+      runApp(const App());
+    },
+    (error, stackTrace) {
+      debugPrint('Uncaught error: $error');
+      debugPrintStack(stackTrace: stackTrace);
+    },
+  );
 }
 
 class App extends StatefulWidget {

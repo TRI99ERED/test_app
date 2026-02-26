@@ -775,15 +775,6 @@ final class CalculatorController extends BaseController<CalculatorState> {
             ),
           );
           onError(error, stackTrace);
-        } finally {
-          setState(
-            CalculatorState.idle(
-              memory: state.memory,
-              result: state.result,
-              isReadOnly: state.isReadOnly,
-              message: state.message,
-            ),
-          );
         }
       });
 
