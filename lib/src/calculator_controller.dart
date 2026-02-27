@@ -728,6 +728,18 @@ final class CalculatorController extends BaseController<CalculatorState> {
       var sign = state.memory.characters.last;
       var b = double.parse(state.result);
 
+      if (sign == '÷' && b == 0) {
+        setState(
+          CalculatorState.failed(
+            memory: state.memory,
+            result: 'Can\'t divide by zero',
+            isReadOnly: true,
+            message: 'Division by zero error',
+          ),
+        );
+        return;
+      }
+
       setState(
         state.copyWith(
           result: switch (sign) {
@@ -735,7 +747,7 @@ final class CalculatorController extends BaseController<CalculatorState> {
             '+' => (a + b).toString(),
             '−' => (a - b).toString(),
             '×' => (a * b).toString(),
-            '÷' => b == 0 ? 'Can\'t divide by zero' : (a / b).toString(),
+            '÷' => (a / b).toString(),
             _ => state.result,
           },
           memory: (b >= 0) ? '${state.memory}$b=' : '${state.memory}($b)=',
