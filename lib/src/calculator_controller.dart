@@ -702,6 +702,24 @@ final class CalculatorController extends BaseController<CalculatorState> {
   Future<void> equals() async => await serialExecutor.synchronized(() async {
     try {
       if (state.memory.isEmpty) {
+        setState(
+          state.copyWith(
+            memory: '${state.result}=',
+            isReadOnly: true,
+            message: 'Calculation performed',
+          ),
+        );
+        return;
+      }
+
+      if (state.memory.characters.last == '=') {
+        setState(
+          state.copyWith(
+            memory: '${state.result}=',
+            isReadOnly: true,
+            message: 'Calculation performed',
+          ),
+        );
         return;
       }
 
