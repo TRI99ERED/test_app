@@ -633,6 +633,15 @@ final class CalculatorController extends BaseController<CalculatorState> {
         return;
       }
 
+      if (state.result.startsWith('-')) {
+        setState(
+          state.copyWith(
+            result: state.result.substring(1),
+            message: 'Sign changed',
+          ),
+        );
+        return;
+      }
       setState(
         state.copyWith(result: '-${state.result}', message: 'Sign changed'),
       );
@@ -701,18 +710,7 @@ final class CalculatorController extends BaseController<CalculatorState> {
 
   Future<void> equals() async => await serialExecutor.synchronized(() async {
     try {
-      if (state.memory.isEmpty) {
-        setState(
-          state.copyWith(
-            memory: '${state.result}=',
-            isReadOnly: true,
-            message: 'Calculation performed',
-          ),
-        );
-        return;
-      }
-
-      if (state.memory.characters.last == '=') {
+      if (state.memory.isEmpty || state.memory.characters.last == '=') {
         setState(
           state.copyWith(
             memory: '${state.result}=',
@@ -733,6 +731,7 @@ final class CalculatorController extends BaseController<CalculatorState> {
       setState(
         state.copyWith(
           result: switch (sign) {
+            '%' => (a * b / 100).toString(),
             '+' => (a + b).toString(),
             '−' => (a - b).toString(),
             '×' => (a * b).toString(),
