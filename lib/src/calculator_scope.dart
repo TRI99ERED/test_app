@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/src/calculator_controller.dart';
+import 'package:calculator/src/calculator_controller.dart';
 
 class CalculatorScope extends InheritedWidget {
   final CalculatorController controller;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:test_app/src/calculator_button.dart';
-import 'package:test_app/src/calculator_controller.dart';
-import 'package:test_app/src/calculator_scope.dart';
-import 'package:test_app/src/controller_builder.dart';
-import 'package:test_app/src/controller_consumer.dart';
-import 'package:test_app/src/controller_listener.dart';
+import 'package:calculator/src/calculator_button.dart';
+import 'package:calculator/src/calculator_controller.dart';
+import 'package:calculator/src/calculator_scope.dart';
+import 'package:calculator/src/controller_builder.dart';
+import 'package:calculator/src/controller_consumer.dart';
+import 'package:calculator/src/controller_listener.dart';
 
 class CalculatorApp extends StatefulWidget {
   const CalculatorApp({super.key});
