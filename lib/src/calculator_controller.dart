@@ -3,24 +3,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:calculator/src/base_controller.dart';
 
-class DivisionByZeroException implements Exception {
-  final String message;
-
-  DivisionByZeroException([this.message = 'Can\'t divide by 0']);
-
-  @override
-  String toString() => 'DivisionByZeroException: $message';
-}
-
-class SqrtNegativeNumberException implements Exception {
-  final String message;
-
-  SqrtNegativeNumberException([this.message = 'Can\'t sqrt negative number']);
-
-  @override
-  String toString() => 'SqrtNegativeNumberException: $message';
-}
-
 sealed class CalculatorState extends BaseState {
   final String memory;
   final String result;
