@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:calculator/src/calculator.dart';
+import 'package:calculator/src/calculator_app.dart';
 import 'package:calculator/src/calculator_controller.dart';
 import 'package:calculator/src/calculator_scope.dart';
 
